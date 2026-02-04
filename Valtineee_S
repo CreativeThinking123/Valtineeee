@@ -1,7 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LOVE.exe</title>
+
 <style>
 body {
   background: black;
@@ -9,32 +12,39 @@ body {
   font-family: monospace;
   padding: 20px;
   overflow: hidden;
+  margin: 0;
 }
+
 #terminal {
   white-space: pre-line;
   font-size: 16px;
 }
+
 .glitch {
   animation: glitch 0.3s infinite;
 }
+
 @keyframes glitch {
   0% { color:#00ff9c; }
   50% { color:#ff4d6d; }
   100% { color:#00ff9c; }
 }
+
+#final {
+  display: none;
+  text-align: center;
+  color: white;
+}
+
 button {
   background:#ff4d6d;
   border:none;
-  padding:12px 20px;
+  padding:12px 24px;
   color:white;
   font-size:18px;
   border-radius:30px;
   cursor:pointer;
-}
-#final {
-  display:none;
-  text-align:center;
-  color:white;
+  margin: 10px;
 }
 </style>
 </head>
@@ -44,16 +54,16 @@ button {
 <div id="terminal"></div>
 
 <div id="final">
-  <h1>💖 Will you be my Valentine? 💖</h1>
+  <h1>Will you be my Valentine? 💖</h1>
   <button onclick="yes()">YES 😍</button>
-  <button onmouseover="run(this)">NO 🙈</button>
+  <button id="noBtn" onmouseover="run()">NO 🙈</button>
 </div>
 
 <script>
 const lines = [
   "Initializing LOVE.exe...",
   "Scanning heart...",
-  "User detected: YOU ❤️",
+  "User detected: YOU",
   "Access level: FULL",
   "",
   "Loading memories...",
@@ -61,40 +71,50 @@ const lines = [
   "- Your laugh ✔",
   "- Your presence ✔",
   "",
-  "ERROR ❌",
+  "ERROR!",
   "Heart already occupied...",
   "",
-  "WARNING ⚠️",
+  "WARNING!",
   "Unexpected emotion detected: LOVE",
   "",
   "System override in progress..."
 ];
 
 let i = 0;
+const terminal = document.getElementById("terminal");
+
 function typeLine() {
   if (i < lines.length) {
-    document.getElementById("terminal").innerHTML += lines[i] + "\n";
+    terminal.textContent += lines[i] + "\n";
     i++;
     setTimeout(typeLine, 700);
   } else {
     document.body.style.background =
       "linear-gradient(135deg,#ff9a9e,#fad0c4)";
-    document.getElementById("terminal").classList.add("glitch");
+    terminal.classList.add("glitch");
+
     setTimeout(() => {
-      document.getElementById("terminal").style.display = "none";
+      terminal.style.display = "none";
       document.getElementById("final").style.display = "block";
-    }, 2000);
+    }, 1800);
   }
 }
 typeLine();
 
-function run(btn) {
+/* NO BUTTON ESCAPE */
+function run() {
+  const btn = document.getElementById("noBtn");
   btn.style.position = "absolute";
-  btn.style.left = Math.random()*80 + "vw";
-  btn.style.top = Math.random()*80 + "vh";
+  btn.style.left = Math.random() * 80 + "vw";
+  btn.style.top = Math.random() * 80 + "vh";
 }
+
+/* YES ACTION */
 function yes() {
-  alert("SYSTEM LOCKED 💍❤️ Happy Valentine's Day!");
+  document.getElementById("final").innerHTML = `
+    <h1>Thank you for being my Valentine 💍❤️</h1>
+    <p>System locked. Heart secured.</p>
+  `;
 }
 </script>
 
